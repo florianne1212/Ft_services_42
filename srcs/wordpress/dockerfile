@@ -1,0 +1,14 @@
+FROM alpine
+
+MAINTAINER focudert <fcoudert@student.42.fr>
+
+RUN apk update && apk upgrade ; \
+        apk add php7 php7-fpm php7-opcache ; \
+        apk add php7-gd php7-mysqli php7-zlib php7-curl
+
+RUN wget http://wordpress.org/latest.tar.gz ; \
+		tar xzvf latest.tar.gz ; \
+		#mv wordpress /var/www/html/wordpress ; \
+		rm -f /var/www/html/wordpress/wp-config-sample.php
+
+CMD sleep infinity
