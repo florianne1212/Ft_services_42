@@ -14,7 +14,7 @@ spec:
   - port: 443
     name: https
     protocol: TCP
-    targetPort: 443
+    targetPort: 80
   - port: 22
     name: ssh
     protocol: TCP
@@ -40,7 +40,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: alpine_nginx
+        image: alpine_nginx:latest
         imagePullPolicy: Never
         ports:
           - containerPort: 80
