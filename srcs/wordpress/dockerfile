@@ -1,14 +1,26 @@
-FROM alpine
+FROM alpine:latest
 
 MAINTAINER focudert <fcoudert@student.42.fr>
 
-RUN apk update && apk upgrade ; \
+RUN apk update && apk upgrade && apk add wget && apk add nginx ; \
         apk add php7 php7-fpm php7-opcache ; \
         apk add php7-gd php7-mysqli php7-zlib php7-curl
 
-RUN wget http://wordpress.org/latest.tar.gz ; \
-		tar xzvf latest.tar.gz ; \
-		#mv wordpress /var/www/html/wordpress ; \
-		rm -f /var/www/html/wordpress/wp-config-sample.php
+#RUN	rm /etc/nginx/nginx.conf
+#COPY	nginx.conf /etc/nginx/nginx.conf
 
-CMD sleep infinity
+RUN wget http://wordpress.org/latest.tar.gz \
+		&& tar xzvf latest.tar.gz \
+		&& rm latest.tar.gz \
+		&& mkdir /www \
+		&& mv wordpress www/
+
+#		&& chmod -R 755 /www/wordpress
+
+
+
+COPY /wp-config.php www/html/wordpress
+
+EXPOSE 5050
+
+CMD 	nginx -g "daemon off;"

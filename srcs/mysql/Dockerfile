@@ -10,4 +10,6 @@ COPY init.sql /init.sql
 
 ENTRYPOINT mysqld --user=root --init_file=/init.sql
 
+CMD ./kustom.sh
+
 CMD service mysql start

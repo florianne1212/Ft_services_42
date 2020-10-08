@@ -1,37 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: phpmyadmin
+  name: ftps
 spec:
   type: LoadBalancer
   selector:
-    app: phpmyadmin
+    app: nginx
   ports:
-  - port: 5000
-    targetPort: 5000
-    name: phpmyadmin
+  - port: 21
+    name: ftps
+    targetPort: 80
 
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpmyadmin-deployment
+  name: ftps-deployment
   labels:
-    app: phpmyadmin
+    app: ftps
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpmyadmin
+      app: ftps
   template:
     metadata:
       labels:
-        app: phpmyadmin
+        app: ftps
     spec:
       containers:
-      - name: phpmyadmin
-        image: alpine_phpmyadmin
+      - name: ftps
+        image: alpine_ftps:latest
         imagePullPolicy: Never
         ports:
-        - containerPort: 5000
+          - containerPort: 21
+            name: http
