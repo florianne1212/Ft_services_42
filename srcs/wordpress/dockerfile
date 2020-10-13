@@ -1,26 +1,37 @@
-FROM alpine:latest
+FROM	alpine
 
 MAINTAINER focudert <fcoudert@student.42.fr>
 
-RUN apk update && apk upgrade && apk add wget && apk add nginx ; \
-        apk add php7 php7-fpm php7-opcache ; \
-        apk add php7-gd php7-mysqli php7-zlib php7-curl
-
-#RUN	rm /etc/nginx/nginx.conf
-#COPY	nginx.conf /etc/nginx/nginx.conf
+RUN	apk update && apk add nginx && apk add wget ; \
+    apk add php7 php7-fpm php7-opcache ; \
+    apk add php7-gd php7-mysqli php7-zlib php7-curl ; \
+	apk add php-json ; \
+	apk add --update cache ; \
+	apk add php-bz2 ; \
+	apk add --no-cache openrc openssl openssh
 
 RUN wget http://wordpress.org/latest.tar.gz \
 		&& tar xzvf latest.tar.gz \
-		&& rm latest.tar.gz \
-		&& mkdir /www \
-		&& mv wordpress www/
+		&& mv wordpress var/www/wordpress \
+		&& rm latest.tar.gz
+ 		
+RUN chmod -R 755 /var/www/wordpress
 
-#		&& chmod -R 755 /www/wordpress
+RUN	mkdir -p var/run/nginx
 
+COPY	index_nginx.html var/www/
 
+RUN	rm /etc/nginx/nginx.conf
+COPY	my_nginx.conf /etc/nginx/nginx.conf
 
-COPY /wp-config.php www/html/wordpress
+#RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/example.key -out /etc/nginx/example.crt -subj "/C=FR/ST=IDE/L=Paris/O=42/OU=42/CN=mywebsite.com" 
+
+COPY /wp-config.php /www/wordpress/
 
 EXPOSE 5050
 
-CMD 	nginx -g "daemon off;"
+#EXPOSE	80 443
+
+CMD	/usr/sbin/php-fpm7 ; \
+        /usr/sbin/nginx ; \
+        sleep infinity
