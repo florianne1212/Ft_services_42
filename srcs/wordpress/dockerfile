@@ -3,9 +3,9 @@ FROM	alpine
 MAINTAINER focudert <fcoudert@student.42.fr>
 
 RUN	apk update && apk add nginx && apk add wget ; \
-    apk add php7 php7-fpm php7-opcache ; \
+    apk add --no-cache php7 php7-fpm php7-opcache php7-common ; \
     apk add php7-gd php7-mysqli php7-zlib php7-curl ; \
-	apk add php-json ; \
+	apk add php-json supervisor; \
 	apk add --update cache ; \
 	apk add php-bz2 ; \
 	apk add --no-cache openrc openssl openssh

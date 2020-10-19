@@ -1,13 +1,14 @@
+
 FROM	alpine
 
 MAINTAINER focudert <fcoudert@student.42.fr>
 
-RUN	apk update && apk add nginx ; \
+RUN	apk update && apk add nginx ;\
 	apk add --no-cache openrc openssl openssh
 
 RUN	mkdir -p var/run/nginx
 
-COPY	index_nginx.html /www/
+COPY	index_nginx.html var/www/
 
 RUN	rm /etc/nginx/nginx.conf
 COPY	nginx.conf /etc/nginx/nginx.conf
@@ -16,4 +17,5 @@ RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/examp
 
 EXPOSE	80 443
 
-CMD	nginx -g "daemon off;"
+CMD	/usr/sbin/nginx ; \
+        sleep infinity
