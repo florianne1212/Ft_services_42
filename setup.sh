@@ -6,15 +6,19 @@ docker stop $(docker ps -a -q)
 docker rm $(docker ps -a -q) 
 #start the deployment
 minikube start --vm-driver=docker
-
+sudo chown -R user42 $HOME/.kube $HOME/.minikube
+eval $(minikube docker-env)
 #start the dashboard
 #minikube dashboard
 
+minikube addons enable metrics-server
+minikube addons enable logviewer
 minikube addons enable dashboard
 minikube addons enable metrics-server
-eval $(minikube docker-env)
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/namespace.yaml
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.4/manifests/metallb.yaml
+
+
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
 # On first install only
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 kubectl apply -f srcs/metallb/metallb-config.yaml
