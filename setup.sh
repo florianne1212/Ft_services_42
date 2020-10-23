@@ -28,11 +28,11 @@ kubectl apply -f srcs/metallb/metallb-config.yaml
 docker build -t alpine_nginx srcs/nginx
 #docker build -t alpine_mysql srcs/mysql/
 docker build -t alpine_wordpress srcs/wordpress/
-#docker build -t alpine_phpmyadmin srcs/phpmyadmin/
+docker build -t alpine_phpmyadmin srcs/phpmyadmin/
 #docker build -t alpine_ftps srcs/ftps/
-#docker build -t alpine_influxdb srcs/influxdb/
-#docker build -t alpine_telegraf srcs/telegraf/
-#docker build -t alpine_grafana srcs/grafana/
+docker build -t alpine_influxdb srcs/influxdb/
+docker build -t alpine_telegraf srcs/telegraf/
+docker build -t alpine_grafana srcs/grafana/
 
 
 
@@ -41,10 +41,10 @@ docker build -t alpine_wordpress srcs/wordpress/
 kubectl apply -f srcs/nginx/nginx-deployment.yaml
 #kubectl apply -f srcs/mysql/mysql-deployment.yaml
 kubectl apply -f srcs/wordpress/wordpress-deployment.yaml
-#kubectl apply -f srcs/phpmyadmin/php-deployment.yaml
+kubectl apply -f srcs/phpmyadmin/php-deployment.yaml
 #kubectl apply -f srcs/ftps/ftps-deployment.yaml
-#kubectl apply -f srcs/telegraf/telegraf-deployment.yaml
-#kubectl apply -f srcs/grafana/grafana_deployment.yaml
-#kubectl apply -f srcs/influxdb/influxdb_deployment.yaml
+kubectl apply -f srcs/telegraf/telegraf-deployment.yaml
+kubectl apply -f srcs/grafana/grafana_deployment.yaml
+kubectl apply -f srcs/influxdb/influxdb_deployment.yaml
 
 kubectl get pods
