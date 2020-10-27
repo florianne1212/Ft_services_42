@@ -9,7 +9,7 @@ spec:
   ports:
   - port: 3306
     protocol: TCP
-    targetPort: 80
+    targetPort: 3306
 
 ---
 
@@ -34,7 +34,7 @@ spec:
         image: alpine_mysql
         imagePullPolicy: Never
         ports:
-        - containerPort: 80
+        - containerPort: 3306
           name: mysql
 
 

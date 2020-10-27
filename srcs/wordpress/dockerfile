@@ -24,6 +24,10 @@ COPY	index_nginx.html var/www/
 RUN	rm /etc/nginx/nginx.conf
 COPY	my_nginx.conf /etc/nginx/nginx.conf
 
+COPY entry.sh .
+
+RUN chmod 777 entry.sh
+
 #RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/example.key -out /etc/nginx/example.crt -subj "/C=FR/ST=IDE/L=Paris/O=42/OU=42/CN=mywebsite.com" 
 
 COPY /wp-config.php /www/wordpress/
@@ -34,4 +38,5 @@ EXPOSE 5050
 
 CMD	/usr/sbin/php-fpm7 ; \
         /usr/sbin/nginx ; \
+		./entry.sh ; \
         sleep infinity
