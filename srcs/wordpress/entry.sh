@@ -7,7 +7,7 @@ if ! $(wp core is-installed); then
     rm -rf wp-config.php;
 
     while true; do
-        if wp config create --dbname=wordpress --dbuser=newuser --dbpass=password --dbhost=mysql; then
+        if wp config create --dbname=wordpress --dbuser=newuser --dbpass=newuser --dbhost=mysql; then
             break;
         fi;
         sleep 5

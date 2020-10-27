@@ -33,7 +33,8 @@ RUN apk add curl ; \
 		apk add sudo ; \ 
 		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \
 		chmod +x wp-cli.phar ; \
-		sudo mv wp-cli.phar /usr/local/bin/wp
+		sudo mv wp-cli.phar /usr/local/bin/wp ; \
+		apk add mysql-client
 
 
 #RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/example.key -out /etc/nginx/example.crt -subj "/C=FR/ST=IDE/L=Paris/O=42/OU=42/CN=mywebsite.com" 
