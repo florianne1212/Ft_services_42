@@ -10,12 +10,21 @@ RUN	apk update && apk add nginx && apk add wget ; \
 	apk add php-bz2 ; \
 	apk add --no-cache openrc openssl openssh
 
-RUN wget http://wordpress.org/latest.tar.gz \
-		&& tar xzvf latest.tar.gz \
-		&& mv wordpress var/www/wordpress \
-		&& rm latest.tar.gz
+#RUN wget http://wordpress.org/latest.tar.gz \
+#		&& tar xzvf latest.tar.gz \
+#		&& mv wordpress var/www/wordpress \
+#		&& rm latest.tar.gz
  		
-RUN chmod -R 755 /var/www/wordpress
+#RUN chmod -R 755 /var/www/wordpress
+
+RUN apk add curl ; \
+		apk add php-phar ; \
+		apk add sudo ; \
+		apk add php7-iconv ; \
+		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \
+		chmod +x wp-cli.phar ; \
+		sudo mv wp-cli.phar /usr/local/bin/wp ; \
+		apk add mysql-client
 
 RUN	mkdir -p var/run/nginx
 
@@ -28,13 +37,7 @@ COPY entry.sh .
 
 RUN chmod 777 entry.sh
 
-RUN apk add curl ; \
-		apk add php-phar ; \
-		apk add sudo ; \ 
-		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \
-		chmod +x wp-cli.phar ; \
-		sudo mv wp-cli.phar /usr/local/bin/wp ; \
-		apk add mysql-client
+
 
 
 #RUN	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/example.key -out /etc/nginx/example.crt -subj "/C=FR/ST=IDE/L=Paris/O=42/OU=42/CN=mywebsite.com" 
