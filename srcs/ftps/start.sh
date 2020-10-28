@@ -1,0 +1,1 @@
+exec /usr/sbin/vsftpd -opasv_min_port=2100 -opasv_max_port=21000 -opasv_adress=172.17.0.3 /etc/vsftpd/vsftpd.conf
