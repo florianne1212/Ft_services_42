@@ -12,7 +12,6 @@ spec:
   - port: 5000
     targetPort: 5000
     name: phpmyadmin
-  loadBalancerIP: 172.17.0.3
 
 ---
 

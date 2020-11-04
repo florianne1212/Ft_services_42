@@ -17,7 +17,6 @@ spec:
     name: https
     protocol: TCP
     targetPort: 443
-  loadBalancerIP: 172.17.0.3
 
 ---
 

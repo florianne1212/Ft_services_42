@@ -12,8 +12,8 @@ COPY	vsftpd.conf /etc/vsftpd/vsftpd.conf
 
 ADD start.sh /
 
-#RUN chmod 775 start.sh
+RUN chmod 775 start.sh
 
 EXPOSE 20 21 21000-21010
 
-CMD /usr/sbin/vsftpd  /etc/vsftpd/vsftpd.conf
+CMD /start.sh

@@ -58,6 +58,11 @@ spec:
       - name: ftps
         image: alpine_ftps
         imagePullPolicy: Never
+        env:
+          - name: USER
+            value: user
+          - name: PASSWORD
+            value: password
         ports:
           - containerPort: 21
           - containerPort: 20

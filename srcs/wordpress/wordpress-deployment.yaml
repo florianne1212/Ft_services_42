@@ -12,7 +12,6 @@ spec:
   - port: 5050
     targetPort: 5050
     name: wordpress
-  loadBalancerIP: 172.17.0.3
 
 ---
 
