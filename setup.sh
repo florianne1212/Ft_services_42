@@ -8,6 +8,13 @@ docker rm $(docker ps -a -q)
 minikube start --vm-driver=docker
 sudo chown -R user42 $HOME/.kube $HOME/.minikube
 eval $(minikube docker-env)
+
+CLUSTER_IP="$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)"
+sed -i 's/172.17.0.3/'$CLUSTER_IP'/g' srcs/metallb/metallb-config.yaml
+sed -i 's/172.17.0.3/'$CLUSTER_IP'/g' srcs/ftps/start.sh
+sed -i 's/172.17.0.3/'$CLUSTER_IP'/g' srcs/nginx/nginx.conf
+sed -i 's/172.17.0.3/'$CLUSTER_IP'/g' srcs/wordpress/entry.sh
+sed -i 's/172.17.0.3/'$CLUSTER_IP'/g' srcs/telegraf/telegraf.conf
 #start the dashboard
 #minikube dashboard
 

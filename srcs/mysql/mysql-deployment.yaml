@@ -13,6 +13,21 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,58 +51,11 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-
-
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mysql-deployment
-#   labels:
-#     app: mysql
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mysql
-#   template:
-#     metadata:
-#       labels:
-#         app: mysql
-#     spec:
-#       containers:
-#         ports:
-#         - containerPort: 3306
-#         name: mysql 
-
-# ---
-
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: mysql-pv-claim
-#   labels:
-#     app: mysql
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 1Gi
-#       containers:
-#       - name: mysql
-#         image: mysql:latest
-#         env:
-#         - name: WORDPRESS_DB_HOST
-#           value: user
-#         - name: WORDPRESS_DB_PASSWORD
-#           valueFrom:
-#             secretKeyRef:
-#               name: mysql-pass
-#               key: password
-
-#         - name: mysql-persistent-storage
-#           mountPath: /var/www/html
-#       volumes:
-#       - name: mysql-persistent-storage
-#         persistentVolumeClaim:
-#           claimName: mysql-pv-claim
+        volumeMounts:      
+        - mountPath: /var/lib/mysql
+          name: mysql-pv-claim
+          subPath: mysql
+      volumes:
+      - name: mysql-pv-claim
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim

@@ -45,7 +45,7 @@ spec:
     spec:
       containers:
       - name: influxdb
-        image: alpine_influxdb:latest
+        image: alpine_influxdb
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8086
