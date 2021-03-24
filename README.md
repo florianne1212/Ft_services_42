@@ -6,6 +6,6 @@ result : Succes 100%
 
 how to use :
 
-sh /setup.sh
+sh ./setup.sh
 
 Developped on Linux
